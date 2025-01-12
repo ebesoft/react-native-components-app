@@ -5,17 +5,15 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import { Text, View } from 'react-native';
-import { useColorScheme } from '@/hooks/useColorScheme';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import "../global.css";
+import { useColorScheme } from '@/hooks/useColorScheme';
 import { useThemeColor } from '@/hooks/useThemeColor';
-import ThemedView from '@/presentation/shared/ThemedView';
-import ThemedText from '@/presentation/shared/ThemedText';
 import { allRoutes } from '@/constants/Routes';
 
+
+import "../global.css";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -65,7 +63,7 @@ export default function RootLayout() {
                 key={route.name}
                 name={route.name}
                 options={{
-                  title: route.name,
+                  title: route.title,
                 }}
               />
             ))

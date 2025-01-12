@@ -1,5 +1,5 @@
 import { Href, router } from "expo-router";
-import { View, Text, Pressable } from "react-native"
+import { View, Pressable } from "react-native"
 import ThemedText from "../shared/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Ionicons } from "@expo/vector-icons";
