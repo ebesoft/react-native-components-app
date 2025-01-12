@@ -54,6 +54,7 @@ export default function RootLayout() {
         >
 
           <Stack.Screen name="index" options={{
+           
             title: 'Components App',
           }} />
 
