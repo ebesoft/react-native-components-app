@@ -34,7 +34,7 @@ const ThemedView = ({
             ]}
             className={className}
         >
-            <Text>{children}</Text>
+            {children}
         </View>
     )
 }
