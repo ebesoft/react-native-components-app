@@ -14,6 +14,7 @@ import { allRoutes } from '@/constants/Routes';
 
 
 import "../global.css";
+import { ThemeChangerProvider } from '@/presentation/context/ThemedChangerContext';
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -38,8 +39,8 @@ export default function RootLayout() {
   return (
 
     <GestureHandlerRootView style={{ backgroundColor: backgroundColor, flex: 1 }}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-     
+      {/* <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}> */}
+      <ThemeChangerProvider>
         <Stack
           screenOptions={{
             headerShadowVisible: false,
@@ -65,6 +66,7 @@ export default function RootLayout() {
                 name={route.name}
                 options={{
                   title: route.title,
+                  headerShown: !route.title.includes('Slides'),
                 }}
               />
             ))
@@ -74,7 +76,8 @@ export default function RootLayout() {
 
 
         <StatusBar style="auto" />
-      </ThemeProvider>
+      </ThemeChangerProvider>
+      {/* </ThemeProvider> */}
     </GestureHandlerRootView>
     
   );

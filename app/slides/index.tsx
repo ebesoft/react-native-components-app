@@ -1,6 +1,9 @@
+import ThemedButton from '@/presentation/shared/ThemedButton';
 import ThemedText from '@/presentation/shared/ThemedText';
 import ThemedView from '@/presentation/shared/ThemedView';
-import { View, Text, ImageSourcePropType, Image, useWindowDimensions } from 'react-native';
+import { router } from 'expo-router';
+import { useRef, useState } from 'react';
+import { View, Text, ImageSourcePropType, Image, useWindowDimensions, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 interface Slide {
@@ -28,15 +31,63 @@ const items: Slide[] = [
 ];
 
 const SlidesScreen = () => {
+
+  const flatListRef = useRef<FlatList>(null);
+  const [currentSlideIndex, setCurrentSlideIndex ] = useState(0);
+  const [currentScroll, setCurrentScroll ] = useState(false)
+
+  const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if( currentScroll ) return;
+    
+    const { contentOffset, layoutMeasurement } = event.nativeEvent;
+    
+    const currentIndex = Math.floor(contentOffset.x / layoutMeasurement.width);
+    
+    
+    setCurrentSlideIndex( currentIndex > 0 ? currentIndex: 0);
+
+    if(currentIndex === items.length-1) {
+      setCurrentScroll(true)
+    } 
+  }
+
+  const scrollToSlide = (index: number) => {
+    if(!flatListRef.current) return;
+
+    flatListRef.current.scrollToIndex({ 
+        index:index, 
+        animated: true 
+      });
+  }
+
   return (
     <ThemedView>
       <FlatList 
+        ref={ flatListRef}
         data={items}
         keyExtractor={(item) => item.title}
         renderItem={({ item }) => <SlideItem item={item} />}
         horizontal
         pagingEnabled
+        scrollEnabled={currentScroll}
+        onScroll={onScroll}
       />
+
+      {
+        (currentSlideIndex === items.length-1 )
+        ? (
+          <ThemedButton 
+          onPress={() => router.dismiss()}
+          className='absolute bottom-10 right-5 w-[150px]'>Finalizar</ThemedButton>
+        )
+        : (
+        <ThemedButton 
+          onPress={() => scrollToSlide(currentSlideIndex + 1)}
+          className='absolute bottom-10 right-5 w-[150px]'>Siguiente</ThemedButton>
+        )
+      }
+
+      
     </ThemedView>
   );
 };
@@ -64,6 +115,16 @@ const SlideItem = ({ item }: SlideItemProps) => {
           alignSelf: 'center',
         }}
       />
+
+      <ThemedText 
+        type="h1"
+        className='text-light-primary dark:text-dark-primary'
+      >
+        {item.title}
+      </ThemedText>
+
+      <ThemedText className='mt-10'>{item.desc}</ThemedText>
+
     </ThemedView>
   );
 };
