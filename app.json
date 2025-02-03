@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "06-components-app",
+    "name": "Components RN",
     "slug": "06-components-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.emersonocampo.expo_components_app"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +37,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "db1be3ef-70f0-4a3e-8dcd-4d0152c846f7"
+      }
     }
   }
 }
